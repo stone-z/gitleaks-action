@@ -10,7 +10,7 @@ jobs:
       - run: "ls"
       - name: gitleaks-action with defaults
         # uses: zricethezav/gitleaks-action@master
-        uses: stone-z/gitleaks-action@master
+        uses: stone-z/gitleaks-action@scan-only-pushed-commits
       - name: gitleaks-action with config
         uses: zricethezav/gitleaks-action@master
         with:
