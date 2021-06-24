@@ -6,13 +6,13 @@ jobs:
   gitleaks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: print event
-        run: |
-          echo ${{ github.event }}
+      - uses: actions/checkout@v2
+      - run: "ls"
       - name: gitleaks-action with defaults
-        uses: zricethezav/gitleaks-action@master
+        # uses: zricethezav/gitleaks-action@master
+        uses: stone-z/gitleaks-action@master
       - name: gitleaks-action with config
         uses: zricethezav/gitleaks-action@master
         with:
           config-path: .gitleaks.yml
+          commit-before: ${{ github.event.before }}
