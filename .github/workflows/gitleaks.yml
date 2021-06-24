@@ -15,4 +15,5 @@ jobs:
         uses: zricethezav/gitleaks-action@master
         with:
           config-path: .gitleaks.yml
-          commit-before: ${{ github.event.before }}
+          # commit-before: ${{ github.event.before }}
+          commit-before: 1234567890
