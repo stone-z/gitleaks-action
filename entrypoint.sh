@@ -9,27 +9,25 @@ if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
   CONFIG=" --config-path=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
 fi
 
-echo "before: $INPUT_COMMIT_BEFORE"
-echo "config: $CONFIG"
-
 echo running gitleaks "$(gitleaks --version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-if [ "$GITHUB_EVENT_NAME" = "push" ]
-then
-  TARGET_REF="$INPUT_COMMIT_BEFORE"
-  # git --git-dir="$GITHUB_WORKSPACE/.git" log --left-right --cherry-pick --pretty=format:"%H" remotes/origin/$INPUT_COMMIT_BEFORE... > commit_list.txt
-  # echo gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG
-  # CAPTURE_OUTPUT=$(gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG)
-elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]
-then 
-  TARGET_REF="remotes/origin/$GITHUB_BASE_REF"
-  # git --git-dir="$GITHUB_WORKSPACE/.git" log --left-right --cherry-pick --pretty=format:"%H" remotes/origin/$GITHUB_BASE_REF... > commit_list.txt
-  # echo gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG
-  # CAPTURE_OUTPUT=$(gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG)
-fi
+case "$GITHUB_EVENT_NAME" in
+ "push")         TARGET_REF="$INPUT_COMMIT_BEFORE" ;;
+ "pull_request") TARGET_REF="remotes/origin/$GITHUB_BASE_REF" ;;
+ *)              echo "Unsupported event type: $GITHUB_EVENT_NAME"; exit 1 ;;
+esac
 
+# if [ "$GITHUB_EVENT_NAME" = "push" ]
+# then
+#   TARGET_REF="$INPUT_COMMIT_BEFORE"
+# elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]
+# then 
+#   TARGET_REF="remotes/origin/$GITHUB_BASE_REF"
+# fi
+
+echo "Scanning commits back to $TARGET_REF"
 git --git-dir="$GITHUB_WORKSPACE/.git" log --left-right --cherry-pick --pretty=format:"%H" $TARGET_REF... > commit_list.txt
 echo gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG
 CAPTURE_OUTPUT=$(gitleaks --path=$GITHUB_WORKSPACE --verbose --redact --commits-file=commit_list.txt $CONFIG)
