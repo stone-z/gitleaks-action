@@ -23,6 +23,7 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.commit-before }}
+    - 1234567890
+    # - ${{ inputs.commit-before }}
     - ${{ inputs.config-path }}
     
