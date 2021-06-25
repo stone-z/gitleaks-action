@@ -4,13 +4,13 @@ branding:
   color: purple
   icon: eye
 inputs:
+  commit-before:
+    description: 'SHA of the commit before the push.'
+    required: true
   config-path:
     description: 'Path to config (relative to $GITHUB_WORKSPACE)'
     required: false
     default: '.github/.gitleaks.toml'
-  commit-before:
-    description: 'SHA of the commit before the push.'
-    required: true
   commit-after:
     description: 'SHA of the commit after the push.'
     required: false
@@ -23,5 +23,6 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.config-path }}
     - ${{ inputs.commit-before }}
+    - ${{ inputs.config-path }}
+    

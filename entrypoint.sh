@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INPUT_CONFIG_PATH="$1"
-INPUT_COMMIT_BEFORE="$2"
+INPUT_CONFIG_PATH="$2"
+INPUT_COMMIT_BEFORE="$1"
 CONFIG=""
 
 # check if a custom config have been provided
@@ -18,7 +18,6 @@ DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring
 
 if [ "$GITHUB_EVENT_NAME" = "push" ]
 then
-  
   echo gitleaks --path=$GITHUB_WORKSPACE --verbose --redact $CONFIG
   CAPTURE_OUTPUT=$(gitleaks --path=$GITHUB_WORKSPACE --verbose --redact $CONFIG)
 elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]
