@@ -19,7 +19,7 @@ case "$GITHUB_EVENT_NAME" in
 esac
 
 echo "Scanning commits back to $TARGET_REF"
-
+#
 # Create list of commits since the target ref.
 git --git-dir="$GITHUB_WORKSPACE/.git" log --left-right --cherry-pick --pretty=format:"%H" $TARGET_REF... > commit_list.txt
 
