@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INPUT_CONFIG_PATH="$2"
-INPUT_COMMIT_BEFORE="$1"
+INPUT_CONFIG_PATH="$1"
+INPUT_COMMIT_BEFORE="$2"
 CONFIG=""
 
 # check if a custom config have been provided

@@ -11,9 +11,10 @@ jobs:
       - name: gitleaks-action with defaults
         # uses: zricethezav/gitleaks-action@master
         uses: stone-z/gitleaks-action@scan-only-pushed-commits
+        with:
+          commit-before: ${{ github.event.before }}
       - name: gitleaks-action with config
-        uses: zricethezav/gitleaks-action@master
+        uses: stone-z/gitleaks-action@scan-only-pushed-commits
         with:
           config-path: .gitleaks.yml
-          # commit-before: ${{ github.event.before }}
-          commit-before: 1234567890
+          commit-before: ${{ github.event.before }}
