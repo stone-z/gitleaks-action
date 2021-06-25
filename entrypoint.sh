@@ -3,7 +3,7 @@
 INPUT_CONFIG_PATH="$1"
 INPUT_COMMIT_BEFORE="$2"
 CONFIG=""
-
+# Very important update
 # Check if a custom config has been provided.
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
   CONFIG=" --config-path=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
